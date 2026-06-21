@@ -4,24 +4,18 @@ import gsap from 'gsap';
 
 export default function Studio() {
   const [activeUnit, setActiveUnit] = useState(0);
-  const [gainValue, setGainValue] = useState(65);
-  const [leds, setLeds] = useState(Array(15).fill(false));
   const containerRef = useRef(null);
+  const imageRef = useRef(null);
 
-  // Simulate LED meters reacting to gain value and noise
+  // Smooth transition animation when active gear item changes
   useEffect(() => {
-    const calculateLeds = () => {
-      const activeCount = Math.round((gainValue / 100) * 15);
-      // Add a tiny bit of random jitter to make it feel alive
-      const jitter = Math.random() > 0.6 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-      const finalCount = Math.max(0, Math.min(15, activeCount + jitter));
-      
-      setLeds(Array(15).fill(false).map((_, i) => i < finalCount));
-    };
-
-    const interval = setInterval(calculateLeds, 100);
-    return () => clearInterval(interval);
-  }, [gainValue]);
+    if (imageRef.current) {
+      gsap.fromTo(imageRef.current,
+        { opacity: 0, scale: 0.98 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }
+      );
+    }
+  }, [activeUnit]);
 
   // Entrance animations
   useEffect(() => {
@@ -50,7 +44,8 @@ export default function Studio() {
         "Brede frequentierespons en superieure transiënte respons"
       ],
       icon: Mic,
-      val: "98 dB"
+      val: "98 dB",
+      image: "/images/gear_at2020.png"
     },
     {
       id: 1,
@@ -63,7 +58,8 @@ export default function Studio() {
         "Kristalheldere voorversterkers met Air-modus"
       ],
       icon: Cpu,
-      val: "192 kHz"
+      val: "192 kHz",
+      image: "/images/gear_focusrite.png"
     },
     {
       id: 2,
@@ -76,7 +72,8 @@ export default function Studio() {
         "Nauwkeurige geluidsweergave over het hele spectrum"
       ],
       icon: Volume2,
-      val: "+4 dBu"
+      val: "+4 dBu",
+      image: "/images/gear_krk.png"
     },
     {
       id: 3,
@@ -89,7 +86,8 @@ export default function Studio() {
         "Naadloze integratie met professionele DJ software"
       ],
       icon: Disc,
-      val: "Rekordbox"
+      val: "Rekordbox",
+      image: "/images/gear_ddj400.png"
     },
     {
       id: 4,
@@ -102,7 +100,8 @@ export default function Studio() {
         "State-of-the-art mixing engine en mastering effecten"
       ],
       icon: HardDrive,
-      val: "v21.2"
+      val: "v21.2",
+      image: "/images/gear_flstudio.png"
     }
   ];
 
@@ -207,53 +206,36 @@ export default function Studio() {
 
           </div>
 
-          {/* Interactive Digital Instrument / Signal Mixer */}
-          <div className="border border-white/5 bg-bunker/30 rounded-[2.5rem] p-8 relative overflow-hidden">
-             <span className="font-heading text-xs text-accent tracking-wider uppercase block mb-6 font-bold">
-              Signaal Niveau
-            </span>
+          {/* Gear Image Display Panel */}
+          <div className="border border-white/5 bg-bunker/30 rounded-[2.5rem] p-6 relative overflow-hidden flex flex-col justify-between h-[360px] md:h-[400px]">
+            {/* Technical corner accents */}
+            <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-white/10" />
+            <div className="absolute top-0 right-0 w-3 h-3 border-t border-r border-white/10" />
+            <div className="absolute bottom-0 left-0 w-3 h-3 border-b border-l border-white/10" />
+            <div className="absolute bottom-0 right-0 w-3 h-3 border-b border-r border-white/10" />
 
-            <div className="space-y-8">
-              {/* Gain dial/slider */}
-              <div className="space-y-3">
-                 <div className="flex justify-between items-center text-xs font-sans">
-                  <span className="text-softwhite/60 font-semibold">Gain</span>
-                  <span className="text-accent font-bold">{gainValue} dB</span>
-                </div>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={gainValue}
-                  onChange={(e) => setGainValue(parseInt(e.target.value))}
-                  className="w-full h-1 bg-primary rounded-lg appearance-none cursor-pointer accent-accent"
-                />
-              </div>
+            {/* Glowing background hint */}
+            <div className="absolute inset-0 bg-gradient-to-br from-accent/0 via-accent/[0.01] to-accent/5 opacity-40 pointer-events-none" />
 
-              {/* LED signal bar */}
-              <div className="space-y-2">
-                 <span className="font-sans text-[10px] text-softwhite/40 block font-semibold">Signaal niveau</span>
-                <div className="flex gap-1 h-5 items-center justify-between bg-bunker border border-white/5 p-1 rounded-md">
-                  {leds.map((active, i) => {
-                    // Color transitions: 0-9 green/cyan (accent), 10-12 orange, 13-14 red (signal peak)
-                    let activeColor = 'bg-accent';
-                    if (i >= 12) activeColor = 'bg-red-500 shadow-[0_0_8px_#ef4444]';
-                    else if (i >= 9) activeColor = 'bg-accent shadow-[0_0_8px_#E57E25]';
-                    else if (active) activeColor = 'bg-accent shadow-[0_0_8px_#E57E25]';
+            <div className="flex justify-between items-center mb-4 relative z-10">
+              <span className="font-heading text-xs text-accent tracking-wider uppercase font-bold">
+                Gear Afbeelding
+              </span>
+              <span className="font-sans text-[10px] text-softwhite/40 tracking-wider uppercase font-semibold">
+                Bunker Live _
+              </span>
+            </div>
 
-                    return (
-                      <div
-                        key={i}
-                        className={`flex-1 h-full rounded-[1px] transition-all duration-100 ${
-                          active ? activeColor : 'bg-primary/10'
-                        }`}
-                      />
-                    );
-                  })}
-                </div>
-              </div>
-
-
+            <div className="relative flex-1 rounded-2xl overflow-hidden border border-white/10 bg-bunker/80 group">
+              <img
+                ref={imageRef}
+                src={gearList[activeUnit].image}
+                alt={gearList[activeUnit].name}
+                decoding="async"
+                className="w-full h-full object-cover transition-all duration-700 ease-out scale-100 group-hover:scale-105 group-hover:brightness-105"
+              />
+              {/* Subtle ambient gradient overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-bunker/60 via-transparent to-transparent pointer-events-none" />
             </div>
           </div>
         </div>
