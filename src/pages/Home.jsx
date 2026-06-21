@@ -769,7 +769,7 @@ export default function Home() {
           <span className="font-data text-xs text-accent tracking-[0.3em] uppercase mb-4 block">RUIMTE VOOR CO-CREATIE</span>
           <h2 className="font-heading text-3xl md:text-5xl font-black mb-6">
             KLAAR OM JE PRODUCTIE<br />
-            <span className="font-drama italic text-accent font-normal">NAAR HET VOLGENDE NIVEAU</span> TE TILLEN?
+            NAAR HET <span className="font-drama italic text-accent font-normal">VOLGENDE NIVEAU</span> TE TILLEN?
           </h2>
           <p className="font-sans text-sm text-white/70 max-w-md mx-auto mb-8 leading-relaxed">
             Boek vandaag nog je sessie in onze studio in Leiden en werk samen met ervaren engineers aan jouw sound.
