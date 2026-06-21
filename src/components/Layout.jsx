@@ -170,7 +170,7 @@ export default function Layout({ children }) {
 
   return (
     <LoaderContext.Provider value={{ startTransition, endTransition }}>
-      <div className="relative min-h-screen bg-bunker text-softwhite select-none flex flex-col overflow-x-hidden">
+      <div className="relative min-h-screen bg-bunker text-softwhite select-none flex flex-col overflow-x-clip">
         {/* Site Entry Preloader */}
         {showPreloader && (
           <PageLoader

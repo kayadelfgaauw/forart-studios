@@ -528,7 +528,7 @@ export default function Home() {
       {/* Showcase Section - Wat er al gemaakt is */}
       <section 
         ref={horizontalSectionRef}
-        className="relative w-full min-h-screen md:h-screen md:overflow-hidden bg-bunker flex items-center border-t border-accent py-16 md:py-0"
+        className="relative w-full min-h-screen md:h-screen md:overflow-hidden bg-bunker flex flex-col justify-center items-start border-t border-accent py-16 md:py-0 md:pt-28"
       >
         {/* Background Image with blur and dark overlay */}
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -543,7 +543,7 @@ export default function Home() {
         </div>
 
         {/* Center Title - Fixed at top */}
-        <div className="absolute top-12 md:top-28 left-0 right-0 text-center z-10 pointer-events-none">
+        <div className="w-full text-center z-10 pointer-events-none mb-8 md:mb-16">
           <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-wider text-softwhite uppercase">
             FOR ART RELEASES
           </h2>
@@ -552,7 +552,7 @@ export default function Home() {
         {/* Horizontal scroll container */}
         <div 
           ref={scrollContainerRef}
-          className="flex items-center gap-8 md:gap-12 px-6 md:px-[20vw] flex-nowrap w-max select-none overflow-x-auto md:overflow-x-visible snap-x md:snap-none no-scrollbar relative z-10 py-24 will-change-transform transform-gpu"
+          className="flex items-center gap-8 md:gap-12 px-6 md:px-[20vw] flex-nowrap w-max select-none overflow-x-auto md:overflow-x-visible snap-x md:snap-none no-scrollbar relative z-10 py-6 will-change-transform transform-gpu"
         >
           {/* Track Cards */}
           {tracks.map((track) => {
